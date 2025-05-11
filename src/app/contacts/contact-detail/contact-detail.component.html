@@ -1,10 +1,10 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h2>Name of the contact</h2>
+        <h2>{{contact?.name || "Name"}}</h2>
         <div class="row">
             <div class="col-xs-6">
 
-                <img src="#" alt="">
+                <img src={{contact?.imageUrl}} alt="">
             </div>
             <div class="col-xs-6 text-right">
                 <div class="btn btn-primary">
@@ -18,10 +18,10 @@
     </div>
     <div class="panel-body">
         <p>
-            <strong>Email:</strong>
+            <strong>Email: {{contact?.email}}</strong>
         </p>
         <p>
-            <strong>Phone:</strong>
+            <strong>Phone: {{contact?.phone}}</strong>
         </p>
     </div>
 </div>
