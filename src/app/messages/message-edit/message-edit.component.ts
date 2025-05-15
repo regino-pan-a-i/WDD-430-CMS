@@ -28,4 +28,11 @@ export class MessageEditComponent {
     this.addMessageEvent.emit(incomingMessage);
   }
 
+  clearForm() {
+    const form = document.querySelector('form') as HTMLFormElement;
+    if (form) {
+      form.reset();
+    }
+  }
+
 }
