@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { Document } from '../document.model';
 
 @Component({
@@ -8,6 +8,11 @@ import { Document } from '../document.model';
   styleUrl: './document-item.component.css'
 })
 export class DocumentItemComponent {
-  @Input() document: Document;
+  @Input() document?: Document;
 
+  @Output() documentClick = new EventEmitter<Document>();
+
+  onClick() {
+    this.documentClick.emit(this.document);
+  }
 }
