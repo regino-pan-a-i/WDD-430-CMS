@@ -9,10 +9,10 @@ import { Document } from '../document.model';
 })
 export class DocumentsListComponent {
   documents: Array<Document> = [
-    new Document('1', 'Document 1', 'Description 1', 'http://www.example.com', 'children'),
-    new Document('2', 'Document 2', 'Description 2', 'http://www.example.com', 'children'),
-    new Document('3', 'Document 3', 'Description 3', 'http://www.example.com', 'children'),
-    new Document('4', 'Document 4', 'Description 4', 'http://www.example.com', 'children')
+    new Document('1', 'Where the Wild Things Are', 'A story about a boy named Max who sails to the land of the Wild Things and becomes their king.', 'https://www.example.com/where-the-wild-things-are', 'children'),
+    new Document('2', 'Charlotte\'s Web', 'A classic tale of friendship between a pig named Wilbur and a spider named Charlotte.', 'https://www.example.com/charlottes-web', 'children'),
+    new Document('3', 'The Very Hungry Caterpillar', 'Follows a caterpillar as it eats its way through the days of the week and eventually becomes a butterfly.', 'https://www.example.com/the-very-hungry-caterpillar', 'children'),
+    new Document('4', 'Green Eggs and Ham', 'A rhyming story by Dr. Seuss about trying new things, especially green eggs and ham.', 'https://www.example.com/green-eggs-and-ham', 'children')
   ]
 
   @Output() selectedDocumentEvent: EventEmitter<Document> = new EventEmitter<Document>();
