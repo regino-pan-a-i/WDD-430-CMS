@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-edit',
@@ -10,7 +11,8 @@ import { Message } from '../message.model';
 export class MessageEditComponent {
 
   @Output() addMessageEvent = new EventEmitter<Message>();
-  private idCounter = 0;
+
+  constructor(private messageService: MessageService){  }
 
   addMessageSubmit(message: Event) {
     message.preventDefault();
@@ -22,9 +24,10 @@ export class MessageEditComponent {
     console.log('Subject:', subject);
     console.log('Message:', messageText);
   
-    this.idCounter += 1;
+   
   
-    const incomingMessage = new Message(this.idCounter, subject, messageText, 'Lali Cuadora');
+    const incomingMessage = new Message('0', subject, messageText, 'Lali Cuadora');
+    this.messageService.addMessage(incomingMessage)
     this.addMessageEvent.emit(incomingMessage);
   }
 

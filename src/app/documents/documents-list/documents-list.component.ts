@@ -14,7 +14,6 @@ export class DocumentsListComponent {
   // @Output() selectedDocumentEvent: EventEmitter<Document> = new EventEmitter<Document>();
 
   constructor(private documentService: DocumentService){
-    this.documentService.getDocuments()
     this.documentService.documentSelectedEvent
   }
 

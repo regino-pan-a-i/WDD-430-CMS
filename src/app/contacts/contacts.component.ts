@@ -11,8 +11,7 @@ import { ContactService } from './contact.service';
 export class ContactsComponent {
 
   selectedContact?: Contact;
-  constructor(private contactService: ContactService){
-  }
+  constructor(private contactService: ContactService){  }
 
 
   ngOnInit(){

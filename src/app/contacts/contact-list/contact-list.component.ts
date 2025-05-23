@@ -27,9 +27,7 @@ export class ContactListComponent {
   contacts: Contact[] = []
 
   constructor(private contactService : ContactService){
-    this.contactService.getContacts()
     this.contactService.contactSelectedEvent
-  
   }
 
   ngOnInit(){
