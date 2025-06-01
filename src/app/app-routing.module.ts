@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/documents', pathMatch: 'full' }, // redirect root to /documents
   { path: 'documents', component: DocumentsComponent },
   { path: 'messages', component: MessageListComponent },
-  { path: 'contact', component: ContactsComponent }
+  { path: 'contacts', component: ContactsComponent }
 ];
 
 @NgModule({
