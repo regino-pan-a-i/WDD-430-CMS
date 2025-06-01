@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [  
       { path: 'new', component: DocumentEditComponent },
       { path: ':id', component: DocumentDetailComponent },
-      { path: ':id:edit', component: DocumentEditComponent }
+      { path: ':id/edit', component: DocumentEditComponent }
     ]
    },
   { path: 'messages', component: MessageListComponent },
