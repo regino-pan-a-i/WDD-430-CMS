@@ -20,4 +20,11 @@ export class ContactDetailComponent {
       this.contact = this.contactService.getContact(id);
     })
   }
+
+  onDelete(){
+    if (this.contact){
+      this.contactService.deleteContact(this.contact)
+    }
+    this.router.navigateByUrl('/contacts')
+  }
 }

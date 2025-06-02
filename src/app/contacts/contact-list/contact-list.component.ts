@@ -18,5 +18,10 @@ export class ContactListComponent {
 
   ngOnInit(){
     this.contacts = this.contactService.getContacts()
+    this.contactService.contacChangedEvent.subscribe(newContacts =>{
+      if (this.contacts){
+        this.contacts = newContacts
+      }
+    })
   }
 }
