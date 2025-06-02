@@ -10,10 +10,10 @@ import { Contact } from '../contact.model';
 export class ContactItemComponent {
 
   @Input() contact!: Contact;
-  @Output() contactClick = new EventEmitter<Contact>();
+  // @Output() contactClick = new EventEmitter<Contact>();
 
-  onClick() {
-    this.contactClick.emit(this.contact);
-  }
+  // onClick() {
+  //   this.contactClick.emit(this.contact);
+  // }
 
 }

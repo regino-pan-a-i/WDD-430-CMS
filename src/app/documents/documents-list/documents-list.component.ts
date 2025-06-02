@@ -20,5 +20,8 @@ export class DocumentsListComponent {
 
   ngOnInit(){
     this.documents = this.documentService.getDocuments()
+    this.documentService.documentChangedEvent.subscribe((objects:Document[])=>{
+      this.documents = objects
+    })
   }
 }
