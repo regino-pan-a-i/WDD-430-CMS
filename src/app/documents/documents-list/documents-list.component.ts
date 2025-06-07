@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './documents-list.component.html',
   styleUrl: './documents-list.component.css'
 })
-export class DocumentsListComponent implements OnInit{
+export class DocumentsListComponent implements OnInit, OnDestroy{
 
   subject : Subscription | undefined
 
@@ -27,8 +27,12 @@ export class DocumentsListComponent implements OnInit{
       this.documents = documentsList
     })
     this.documents = this.documentService.getDocuments()
-    this.documentService.documentChangedEvent.subscribe((objects:Document[])=>{
-      this.documents = objects
-    })
+    // this.documentService.documentChangedEvent.subscribe((objects:Document[])=>{
+    //   this.documents = objects
+    // })
+  }
+
+  ngOnDestroy(): void {
+    this.subject?.unsubscribe()
   }
 }
