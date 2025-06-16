@@ -44,7 +44,7 @@ export class ContactService {
     return contact ? contact : null;
   }
 
-  updateContact(originalContact: Contact, newContact:Contact){
+  updateContact(originalContact: Contact | null, newContact:Contact){
     if (originalContact && newContact){
       const pos=  this.contacts.indexOf(originalContact)
       if (pos < 0) return
@@ -57,11 +57,13 @@ export class ContactService {
     }
   }
 
-  deleteContact(contact: Contact) { 
-    const index = this.contacts.indexOf(contact)
-    this.contacts.splice(index, 1)
-   let contactsListClone = this.contacts.slice()
-   this.contactListChangedEvent.next(contactsListClone);
+  deleteContact(contact: Contact | null) { 
+    if (contact){
+      const index = this.contacts.indexOf(contact)
+      this.contacts.splice(index, 1)
+      let contactsListClone = this.contacts.slice()
+      this.contactListChangedEvent.next(contactsListClone);
+    }
 }
 
   getMaxId(): number {

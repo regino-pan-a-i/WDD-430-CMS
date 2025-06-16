@@ -47,7 +47,6 @@ export class DocumentEditComponent {
 
   onSubmit(form: NgForm){
     let value = form.value
-    console.log(value["url"])
     let newDocument = new Document('0', value['name'], value['description'], value['url'], '')
     if (this.editMode){
       this.documentService.updateDocument(this.originalDocument, newDocument)

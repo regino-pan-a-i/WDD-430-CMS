@@ -13,7 +13,7 @@ export class Contact {
         email: string = "",
         phone: string = "",
         imageUrl: string = "",
-        group: Contact[]
+        group: Contact[] | undefined
     ) {
         this.id = id;
         this.name = name;
