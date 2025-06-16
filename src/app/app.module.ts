@@ -18,6 +18,8 @@ import { MessageListComponent } from './messages/message-list/message-list.compo
 import { DropdownDirective } from './shared/dorpdown.directive';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DropdownDirective
+    DropdownDirective,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -55,7 +55,7 @@ export class DocumentService {
     return maxId;
   }
 
-  updateDocument(originalDocument: Document, newDocument:Document){
+  updateDocument(originalDocument: Document | null, newDocument:Document){
     if (originalDocument && newDocument){
       const pos=  this.documents.indexOf(originalDocument)
       if (pos < 0) return
