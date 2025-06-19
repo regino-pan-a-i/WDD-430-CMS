@@ -72,21 +72,28 @@
       <div class="row alert alert-danger" *ngIf="(name?.invalid && name?.untouched) || (email?.invalid && email?.untouched)">
         <p>The Name and Email fields are required.</p>
       </div>
+      <div class="row alert alert-danger" *ngIf="(invalidContact)">
+        <p>Contact cannot be added to the group. It is already in group or is current contact</p>
+      </div>
 
       <div class="row">
         <div class="form-group">
           <label for="groupList">Group Contacts:</label>
 
           <div class="row" id="groupList"
-              style="min-height: 3rem;" >
+              style="min-height: 3rem;" 
+              cdkDropList 
+              [cdkDropListData]="groupContacts"
+              [cdkDropListConnectedTo]="['contactList']"
+              (cdkDropListDropped)="addToGroup($event)">
 
             <div *ngFor="let contact of groupContacts; let i = index">
               <div>
                 <cms-contact-item class="col-sm-11" [contact]="contact"></cms-contact-item>
-                <button class="btn btn-danger col-sm-2 deleteButton" (click)="onRemoveItem(i)">X</button>
+                <button class="btn btn-danger col-sm-2 deleteButton" type="button" (click)="onRemoveItemFromGroup(i)">X</button>
               </div>
             </div>
-            <span class="dragMsg" *ngIf="(groupContacts?.length || 0) < 1">Drag contacts in group here</span>
+            <span class="dragMsg" *ngIf="(groupContacts?.length || 0) < 1" >Drag contacts in group here</span>
           </div>
 
         </div>

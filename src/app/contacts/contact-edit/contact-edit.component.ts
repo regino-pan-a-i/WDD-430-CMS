@@ -17,10 +17,11 @@ export class ContactEditComponent {
   groupContacts: Contact[] = [];
   editMode: boolean = false;
   id: string = ''
+  invalidContact: boolean = false
 
   constructor(private contactService : ContactService, private router : Router, private route :ActivatedRoute){}
 
-    ngOnInit() {
+  ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
         let id = params["id"]
@@ -42,8 +43,7 @@ export class ContactEditComponent {
           this.originalContact.imageUrl,
           this.originalContact.group
         )
-
-        if (this.contact?.group && this.contact.group.length < 1){
+        if (this.contact?.group){
           this.groupContacts = JSON.parse(JSON.stringify(this.contact?.group))
         }
       }
@@ -51,13 +51,19 @@ export class ContactEditComponent {
   }
   onSubmit(form: NgForm){
     let value = form.value
-    let newContact = new Contact('0', value['name'], value['email'], value['phone'],value['imageUrl'], value['group'])
+    let newContact = new Contact(
+                              '0', 
+                              value['name'], 
+                              value['email'], 
+                              value['phone'],
+                              value['imageUrl'],
+                              this.groupContacts)
     if (this.editMode){
       this.contactService.updateContact(this.originalContact, newContact)
     }else{
       this.contactService.addContact(newContact)
     }
-    this.router.navigateByUrl("/contact")
+    this.router.navigateByUrl("/contacts")
   }
 
   onRemoveItem(index : number){
@@ -70,6 +76,43 @@ export class ContactEditComponent {
 
   }
   onCancel(){
-    this.router.navigateByUrl("/contact")
+    this.router.navigateByUrl("/contacts")
   }
+  isInvalidContact(newContact: Contact){
+    if (!newContact) {// newContact has no value
+      return true;
+    }
+    if (this.contact && newContact.id === this.contact.id) {
+      this.invalidContact = true
+      return true;
+    }
+    for (let i = 0; i < this.groupContacts.length; i++){
+      if (newContact.id === this.groupContacts[i].id) {
+        this.invalidContact = true
+        return true;
+      }
+    }
+    return false;
+    
+  }
+
+  addToGroup(event: any) {
+    const selectedContact: Contact = event.item.data;;
+    const invalidGroupContact = this.isInvalidContact(selectedContact);
+    if (invalidGroupContact){
+      return;
+    }
+    this.groupContacts.push(selectedContact);
+    this.invalidContact = false
+  }
+
+  onRemoveItemFromGroup (index: number) {
+    console.log(index)
+    if (index < 0 || index >= this.groupContacts.length) {
+      return;
+    }
+    console.log('this should happen')
+    this.groupContacts.splice(index, 1);
+    console.log('this too should happen')
+}
 }
