@@ -11,9 +11,9 @@ import { Subscription } from 'rxjs';
 })
 export class ContactListComponent implements OnInit, OnDestroy {
 
-    subject: Subscription| undefined
+  subject: Subscription| undefined
 
-  
+  term : string = ''
   contacts: Contact[] = []
 
   constructor(private contactService : ContactService){
@@ -35,5 +35,9 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.subject?.unsubscribe()
+  }
+
+  search(value: string) {
+    this.term = value;
   }
 }
