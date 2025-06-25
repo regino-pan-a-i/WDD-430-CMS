@@ -18,7 +18,9 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import { FormsModule } from '@angular/forms';
-import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList,} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDropList,} from '@angular/cdk/drag-drop';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -39,7 +41,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList,} 
     MessageEditComponent,
     MessageListComponent,
     DocumentEditComponent,
-    ContactEditComponent
+    ContactEditComponent,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList,} 
     DropdownDirective,
     FormsModule,
     CdkDrag,
-    CdkDropList
+    CdkDropList,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
