@@ -21,7 +21,7 @@ export class DocumentService {
   maxDocumentId: number
 
   constructor(private httpClient: HttpClient) {
-    this.documents = MOCKDOCUMENTS; 
+    // this.documents = MOCKDOCUMENTS; 
     this.maxDocumentId = this.getMaxId()
     this.httpClient
       .get('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/documents.json')
