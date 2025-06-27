@@ -107,12 +107,9 @@ export class ContactEditComponent {
   }
 
   onRemoveItemFromGroup (index: number) {
-    console.log(index)
     if (index < 0 || index >= this.groupContacts.length) {
       return;
     }
-    console.log('this should happen')
     this.groupContacts.splice(index, 1);
-    console.log('this too should happen')
 }
 }

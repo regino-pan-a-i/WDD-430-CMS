@@ -60,11 +60,9 @@ export class MessageService {
   }
 
   storeMessages(){
-    console.log('store messages funciton')
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.httpClient.put('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/messages.json', JSON.stringify(this.messages), {headers})
       .subscribe((response: any)=> {
-        console.log(response)
         this.messageChangedEvent.emit(this.messages.slice())
       })
   }

@@ -39,7 +39,7 @@ export class DocumentService {
         },
         // error method
         (error: any) => {
-          console.log(error)
+          throw error
         } 
       )
   }
@@ -110,7 +110,6 @@ export class DocumentService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.httpClient.put('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/documents.json', JSON.stringify(this.documents), {headers})
       .subscribe((response: any)=> {
-        console.log(response)
         this.documentListChangedEvent.next(this.documents.slice())
       })
   }

@@ -40,7 +40,7 @@ export class ContactService {
             },
             // error method
             (error: any) => {
-              console.log(error)
+                throw error;
             } 
           )
   }
@@ -100,7 +100,6 @@ export class ContactService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.httpClient.put('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/contacts.json', JSON.stringify(this.contacts), {headers})
       .subscribe((response: any)=> {
-        console.log(response)
         this.contactListChangedEvent.next(this.contacts.slice())
       })
   }
