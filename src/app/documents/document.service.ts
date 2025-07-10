@@ -24,7 +24,7 @@ export class DocumentService {
     // this.documents = MOCKDOCUMENTS; 
     this.maxDocumentId = this.getMaxId()
     this.httpClient
-      .get('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/documents.json')
+      .get('http://localhost:3000/documents')
       .subscribe((documents: any) => {
           if (documents) {
             this.documents = Object.values(documents) as Document[];
@@ -47,15 +47,38 @@ export class DocumentService {
 
 
 
-  addDocument(newDocument: Document){
-    if (newDocument){
-      this.maxDocumentId ++
-      newDocument.id = this.maxDocumentId.toString()
-      this.documents.push(newDocument)
-      this.updateDocuments()
+  // addDocument(newDocument: Document){
+  //   if (newDocument){
+  //     this.maxDocumentId ++
+  //     newDocument.id = this.maxDocumentId.toString()
+  //     this.documents.push(newDocument)
+  //     this.updateDocuments()
 
-    }
+  //   }
+  // }
+
+
+addDocument(document: Document) {
+  if (!document) {
+    return;
   }
+
+  // make sure id of the new Document is empty
+  document.id = '';
+
+  const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+  // add to database
+  this.httpClient.post<{ message: string, document: Document }>('http://localhost:3000/documents',
+    document,
+    { headers: headers })
+    .subscribe(
+      (responseData) => {
+        // add new document to documents
+        this.documents.push(responseData.document);
+      }
+    );
+}
 
   getDocuments(): Document[]{
     return this.documents.slice()
@@ -80,30 +103,78 @@ export class DocumentService {
     return maxId;
   }
 
-  updateDocument(originalDocument: Document | null, newDocument:Document){
-    if (originalDocument && newDocument){
-      const pos=  this.documents.indexOf(originalDocument)
-      if (pos < 0) return
+  // updateDocument(originalDocument: Document | null, newDocument:Document){
+  //   if (originalDocument && newDocument){
+  //     const pos=  this.documents.indexOf(originalDocument)
+  //     if (pos < 0) return
 
-      newDocument.id = originalDocument.id
-      this.documents[pos] = newDocument
+  //     newDocument.id = originalDocument.id
+  //     this.documents[pos] = newDocument
 
       
-      this.updateDocuments()
+  //     this.updateDocuments()
+  //   }
+  // }
+  updateDocument(originalDocument: Document | null, newDocument: Document) {
+    if (!originalDocument || !newDocument) {
+      return;
     }
-  }
 
-  deleteDocument(document: Document) {
-   if (!document) {
+    const pos = this.documents.findIndex(d => d.id === originalDocument.id);
+
+    if (pos < 0) {
       return;
-   }
-   const pos = this.documents.indexOf(document);
-   if (pos < 0) {
-      return;
-   }
-   this.documents.splice(pos, 1);
+    }
+
+    // set the id of the new Document to the id of the old Document
+    newDocument.id = originalDocument.id;
+    // newDocument._id = originalDocument._id;
+
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    // update database
+    this.httpClient.put('http://localhost:3000/documents/' + originalDocument.id,
+      newDocument, { headers: headers })
+      .subscribe(
+        (responseData) => {
+          this.documents[pos] = newDocument;
+          // this.sortAndSend();
+        }
+      );
+  }
+  // deleteDocument(document: Document) {
+  //  if (!document) {
+  //     return;
+  //  }
+  //  const pos = this.documents.indexOf(document);
+  //  if (pos < 0) {
+  //     return;
+  //  }
+  //  this.documents.splice(pos, 1);
    
-   this.updateDocuments()
+  //  this.updateDocuments()
+  // }
+
+deleteDocument(document: Document) {
+
+    if (!document) {
+      return;
+    }
+
+    const pos = this.documents.findIndex(d => d.id === document.id);
+
+    if (pos < 0) {
+      return;
+    }
+
+    // delete from database
+    this.httpClient.delete('http://localhost:3000/documents/' + document.id)
+      .subscribe(
+        (responseData) => {
+          this.documents.splice(pos, 1);
+          // this.sortAndSend();
+        }
+      );
   }
 
   updateDocuments(){
