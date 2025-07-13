@@ -23,9 +23,13 @@ export class DocumentService {
   constructor(private httpClient: HttpClient) {
     // this.documents = MOCKDOCUMENTS; 
     this.maxDocumentId = this.getMaxId()
+
     this.httpClient
       .get('http://localhost:3000/documents')
       .subscribe((documents: any) => {
+        console.log(documents)
+        this.documents = Object.values(documents) as Document[];
+        console.log(this.documents)
           if (documents) {
             this.documents = Object.values(documents) as Document[];
           } else {
@@ -58,27 +62,27 @@ export class DocumentService {
   // }
 
 
-addDocument(document: Document) {
-  if (!document) {
-    return;
-  }
+  addDocument(document: Document) {
+    if (!document) {
+      return;
+    }
 
-  // make sure id of the new Document is empty
-  document.id = '';
+    // make sure id of the new Document is empty
+    document.id = '';
 
-  const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  // add to database
-  this.httpClient.post<{ message: string, document: Document }>('http://localhost:3000/documents',
-    document,
-    { headers: headers })
-    .subscribe(
-      (responseData) => {
-        // add new document to documents
-        this.documents.push(responseData.document);
-      }
+    // add to database
+    this.httpClient.post<{ message: string, document: Document }>('http://localhost:3000/documents',
+      document,
+      { headers: headers })
+      .subscribe(
+        (responseData) => {
+          // add new document to documents
+          this.documents.push(responseData.document);
+        }
     );
-}
+  }
 
   getDocuments(): Document[]{
     return this.documents.slice()
@@ -177,11 +181,11 @@ deleteDocument(document: Document) {
       );
   }
 
-  updateDocuments(){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.httpClient.put('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/documents.json', JSON.stringify(this.documents), {headers})
-      .subscribe((response: any)=> {
-        this.documentListChangedEvent.next(this.documents.slice())
-      })
-  }
+  // updateDocuments(){
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   this.httpClient.put('https://full-stack-cms-a8a5b-default-rtdb.firebaseio.com/documents.json', JSON.stringify(this.documents), {headers})
+  //     .subscribe((response: any)=> {
+  //       this.documentListChangedEvent.next(this.documents.slice())
+  //     })
+  // }
 }

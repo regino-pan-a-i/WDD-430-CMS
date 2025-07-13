@@ -7,10 +7,7 @@ router.get('/', (req, res, next) => {
   Contact.find()
     .populate('group')
     .then(contacts => {
-      res.status(200).json({
-          message: 'Contacts fetched successfully!',
-          contacts: contacts
-        });
+      res.status(200).json(contacts);
     })
     .catch(error => {
       res.status(500).json({
@@ -24,7 +21,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const maxContactsId = sequenceGenerator.nextId("contacts");
 
-  const contact = new contact({
+  const contact = new Contact({
     id: maxContactsId,
     name: req.body.name,
     email: req.body.email,

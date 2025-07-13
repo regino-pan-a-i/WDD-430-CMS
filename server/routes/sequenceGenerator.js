@@ -8,14 +8,17 @@ var sequenceId = null;
 function SequenceGenerator() {
 
   Sequence.findOne().then((sequence)=>{
-      // sequenceId = sequence._id;
-      // maxDocumentId = sequence.maxDocumentId;
-      // maxMessageId = sequence.maxMessageId;
-      // maxContactId = sequence.maxContactId;
-      console.log(sequence)  
-    }).catch(error => {
-      console.log('An error occurred', error)
-    });
+    if (sequence) {
+      sequenceId = sequence._id;
+      maxDocumentId = sequence.maxDocumentId;
+      maxMessageId = sequence.maxMessageId;
+      maxContactId = sequence.maxContactId;
+    } else {
+      console.log('No sequence found in database');
+    }
+  }).catch(error => {
+    console.log('An error occurred loading sequence:', error);
+  });
 }
 
 SequenceGenerator.prototype.nextId = function(collectionType) {
@@ -43,13 +46,15 @@ SequenceGenerator.prototype.nextId = function(collectionType) {
       return -1;
   }
 
-  Sequence.update({_id: sequenceId}, {$set: updateObject},
-    function(err) {
-      if (err) {
-        console.log("nextId error = " + err);
-        return null
-      }
-    });
+  Sequence.findOneAndUpdate(
+    {_id: sequenceId}, 
+    {$set: updateObject},
+    {new: true}
+  ).then((updatedSequence) => {
+    console.log('Sequence updated successfully');
+  }).catch((err) => {
+    console.log("nextId error = " + err);
+  });
 
   return nextId;
 }

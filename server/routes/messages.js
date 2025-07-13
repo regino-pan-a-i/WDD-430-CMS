@@ -9,6 +9,7 @@ router.get('/', (req, res, next) => {
     res.status(200).json(messages);
   })
   .catch((err) => {
+    console.log('error getting messages')
     console.log(err);
     res.status(500).json({ error: err.message });
   });

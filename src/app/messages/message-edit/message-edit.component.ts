@@ -21,7 +21,7 @@ export class MessageEditComponent {
     const subject = form['subject'].value;
     const messageText = form['message'].value;
   
-    const incomingMessage = new Message(this.messageService.getMaxId() + 1, subject, messageText, 'Lali Cuadora');
+    const incomingMessage = new Message((this.messageService.getMaxId() + 1).toString(), subject, messageText, 'Lali Cuadora');
     this.messageService.addMessage(incomingMessage)
     this.addMessageEvent.emit(incomingMessage);
   }

@@ -4,12 +4,13 @@ const sequenceGenerator = require('./sequenceGenerator');
 const Document = require('../models/document');
 router.get('/', (req, res, next) => {
 
-    console.log('you are here')
+  console.log('you are here')
    // Get all documents in the collection
-   Document.find().then((documents) => {
+  Document.find().then((documents) => {
     res.status(200).json(documents);
   })
   .catch((err) => {
+    console.log('there was an error getting documents')
     console.log(err);
     res.status(500).json({ error: err.message });
   });
